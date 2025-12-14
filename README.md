@@ -160,3 +160,33 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 ---
 
 Built with ❤️ for families who want to make chores fun!
+
+## Security Considerations
+
+### For Production Deployments
+
+This application is designed for private, family use. Before deploying to a public-facing server, consider adding:
+
+1. **Rate Limiting** - Add rate limiting middleware to prevent abuse:
+   ```bash
+   npm install express-rate-limit
+   ```
+   Apply to authentication and API routes.
+
+2. **HTTPS** - Always use HTTPS in production. Use a reverse proxy like nginx or a service like Cloudflare.
+
+3. **Environment Variables** - Never commit `.env` files. Always use strong, random JWT secrets in production.
+
+4. **Input Validation** - The app uses basic validation. Consider adding more comprehensive validation with libraries like Joi or Zod for production.
+
+5. **Database** - Consider migrating from JSON file storage to a proper database (PostgreSQL, MongoDB) for better performance and reliability.
+
+6. **CORS Configuration** - Update CORS settings in `backend/src/server.ts` to only allow your frontend domain.
+
+### Current Security Features
+
+✅ Password hashing with bcrypt  
+✅ JWT-based authentication  
+✅ Role-based access control  
+✅ Protected API endpoints  
+✅ Basic input validation

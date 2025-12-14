@@ -41,12 +41,30 @@ class DatabaseService {
   }
 
   private loadDatabase(): Database {
-    const data = fs.readFileSync(this.dbPath, 'utf-8');
-    return JSON.parse(data);
+    try {
+      const data = fs.readFileSync(this.dbPath, 'utf-8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error loading database:', error);
+      // Return empty database structure if file is corrupted
+      return {
+        users: [],
+        tasks: [],
+        shopItems: [],
+        purchases: [],
+        pets: [],
+        userPets: []
+      };
+    }
   }
 
   private saveDatabase(): void {
-    fs.writeFileSync(this.dbPath, JSON.stringify(this.db, null, 2));
+    try {
+      fs.writeFileSync(this.dbPath, JSON.stringify(this.db, null, 2));
+    } catch (error) {
+      console.error('Error saving database:', error);
+      throw new Error('Failed to save database');
+    }
   }
 
   // User operations
